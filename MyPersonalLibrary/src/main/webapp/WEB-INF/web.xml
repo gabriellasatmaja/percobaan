@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+         https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+
+    <display-name>My Personal Library</display-name>
+
+    <!-- ============================================================
+         Context parameters
+    ============================================================ -->
+    <!--
+         Upload directory — resolved in priority order by UploadConfig:
+           1. Environment variable  UPLOAD_DIR
+           2. JVM property          -DuploadDir
+           3. This context-param    uploadDir
+           4. Default               <user.home>/mylibrary/uploads
+
+         Leave this empty to use the default, or set it to an absolute path.
+         The directory must be writable by the Tomcat process user.
+    -->
+    <context-param>
+        <param-name>uploadDir</param-name>
+        <param-value></param-value>
+    </context-param>
+
+    <!-- ============================================================
+         Listeners
+    ============================================================ -->
+    <!-- Creates upload subdirectories on startup and logs the resolved path. -->
+    <listener>
+        <listener-class>com.mylibrary.listener.AppStartupListener</listener-class>
+    </listener>
+
+    <!-- ============================================================
+         Filters
+    ============================================================ -->
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.mylibrary.filter.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/dashboard</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/books/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/authors/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/categories/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/notes/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/logs/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/goals/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/favorites/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/settings/*</url-pattern>
+    </filter-mapping>
+    <!--
+         Cover images are only shown on authenticated pages, so we protect /covers/* with
+         AuthFilter. Remove this mapping if you want cover images to be publicly accessible
+         (e.g. for sharing links or embedding in emails).
+    -->
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/covers/*</url-pattern>
+    </filter-mapping>
+
+    <!-- ============================================================
+         Servlets
+    ============================================================ -->
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>com.mylibrary.servlet.HomeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.mylibrary.servlet.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>com.mylibrary.servlet.RegisterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.mylibrary.servlet.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DashboardServlet</servlet-name>
+        <servlet-class>com.mylibrary.servlet.DashboardServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DashboardServlet</servlet-name>
+        <url-pattern>/dashboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>BookServlet</servlet-name>
+        <servlet-class>com.mylibrary.servlet.BookServlet</servlet-class>
+        <multipart-config>
+            <max-file-size>20971520</max-file-size><!-- 20 MB -->
+            <max-request-size>23068672</max-request-size><!-- 22 MB -->
+            <file-size-threshold>1048576</file-size-threshold><!-- 1 MB -->
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookServlet</servlet-name>
+        <url-pattern>/books/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AuthorServlet</servlet-name>
+        <servlet-class>com.mylibrary.servlet.AuthorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuthorServlet</servlet-name>
+        <url-pattern>/authors/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CategoryServlet</servlet-name>
+        <servlet-class>com.mylibrary.servlet.CategoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CategoryServlet</servlet-name>
+        <url-pattern>/categories/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>NoteServlet</servlet-name>
+        <servlet-class>com.mylibrary.servlet.NoteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>NoteServlet</servlet-name>
+        <url-pattern>/notes/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ReadingLogServlet</servlet-name>
+        <servlet-class>com.mylibrary.servlet.ReadingLogServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReadingLogServlet</servlet-name>
+        <url-pattern>/logs/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GoalServlet</servlet-name>
+        <servlet-class>com.mylibrary.servlet.GoalServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GoalServlet</servlet-name>
+        <url-pattern>/goals/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FavoriteServlet</servlet-name>
+        <servlet-class>com.mylibrary.servlet.FavoriteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FavoriteServlet</servlet-name>
+        <url-pattern>/favorites/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SettingsServlet</servlet-name>
+        <servlet-class>com.mylibrary.servlet.SettingsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SettingsServlet</servlet-name>
+        <url-pattern>/settings/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CoverServlet</servlet-name>
+        <servlet-class>com.mylibrary.servlet.CoverServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CoverServlet</servlet-name>
+        <url-pattern>/covers/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- ============================================================
+         Session & error pages
+    ============================================================ -->
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/jsp/error/403.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/jsp/error/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/jsp/error/500.jsp</location>
+    </error-page>
+
+</web-app>

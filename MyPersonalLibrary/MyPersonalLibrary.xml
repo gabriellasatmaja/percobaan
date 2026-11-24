@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    OBSOLETE — No longer required for cover image serving.
+
+    CoverServlet (mapped to /covers/*) now serves cover images directly from
+    the uploadDir without any Tomcat alias configuration. This file is kept
+    only for reference and can safely be deleted.
+
+    If you still need to override uploadDir at the Tomcat level (e.g. in a
+    shared hosting environment), you can use the <Parameter> element below.
+    The recommended approach is the UPLOAD_DIR environment variable instead.
+
+    Original purpose: mounted <uploadDir>/covers as a virtual /covers/ path.
+    That is no longer necessary — CoverServlet handles it internally.
+-->
+<!--
+<Context docBase="/absolute/path/to/webapps/MyPersonalLibrary" path="/MyPersonalLibrary">
+
+    OPTIONAL: Override uploadDir at the Tomcat/container level.
+    Resolution order: env var UPLOAD_DIR > JVM -DuploadDir > this param > default.
+
+    <Parameter name="uploadDir" value="/absolute/path/to/uploads" override="false"/>
+
+</Context>
+-->

@@ -1,0 +1,33 @@
+# ============================================================
+# My Personal Library — .gitignore
+# Rename this file to .gitignore before pushing to GitHub
+# ============================================================
+
+# Maven build output
+target/
+*.class
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.eclipse
+.classpath
+.project
+.settings/
+
+# Database credentials — NEVER commit these
+src/main/resources/db.properties
+src/main/webapp/WEB-INF/db.properties
+
+# Uploaded files — not part of source control
+uploads/
+src/main/webapp/uploads/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
