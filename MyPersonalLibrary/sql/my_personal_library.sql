@@ -9,11 +9,11 @@
 --  [EXT]   = original feature extended/upgraded
 -- ================================================================
 
-CREATE DATABASE IF NOT EXISTS my_personal_library
+CREATE DATABASE IF NOT EXISTS my_personal_library_jsp
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
-USE my_personal_library;
+USE my_personal_library_jsp;
 
 -- ================================================================
 -- [ORIG] Table 1: users
