@@ -1417,16 +1417,21 @@ input[type='file'].form-control::file-selector-button:hover {
 .btn-danger {
     display: inline-flex;
     align-items: center;
-    padding: 8px 12px;
+    justify-content: center;
+    padding: 10px 16px;
+    min-height: 40px;
+    box-sizing: border-box;
     border: 1px solid var(--library-border);
     border-radius: var(--radius-sm);
     background: var(--library-white);
     color: var(--library-danger);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 1.3;
+    white-space: nowrap;
     transition: background-color var(--transition), border-color var(--transition);
 }
+
 
 .btn-danger:hover {
     background: var(--library-danger-soft);
@@ -1839,4 +1844,21 @@ input[type='file'].form-control::file-selector-button:hover {
     color: #000;
     border-color: #c3ccdb;
     background: var(--library-field);
+}
+
+.goal-actions .btn-danger,
+.form-actions .btn-danger {
+    /* same box as .secondary-btn / .primary-btn so all buttons in a row match */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-sizing: border-box;
+    min-height: 0;
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    white-space: nowrap;
 }

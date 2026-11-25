@@ -100,7 +100,7 @@ public class AuthorServlet extends HttpServlet {
     }
 
     private int uid(HttpServletRequest r) { return (int) r.getSession().getAttribute("userId"); }
-    private int id(String path) { return Integer.parseInt(path.replaceAll("[^0-9].*", "").substring(1)); }
+    private int id(String path) { return Integer.parseInt(path.split("/")[1]); }
     private String sub(HttpServletRequest r, String prefix) {
         String u = r.getRequestURI().substring(r.getContextPath().length() + prefix.length());
         return u.isEmpty() ? "/" : u;
