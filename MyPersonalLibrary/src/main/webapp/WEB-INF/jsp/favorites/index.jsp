@@ -37,10 +37,14 @@
                         <p class="book-author">${book.authorName}</p>
                         <span class="book-status">${book.status.display}</span>
                         <div class="book-actions">
-                            <a href="${pageContext.request.contextPath}/books/${book.bookId}">Details</a>
+                            <a href="${pageContext.request.contextPath}/books/${book.bookId}/edit">
+                                    Edit
+                                </a>
                             <form action="${pageContext.request.contextPath}/books/${book.bookId}/favorite"
-                                  method="POST">
-                                <button type="submit" title="Remove from favorites">★ Remove</button>
+                                method="POST">
+                                <button type="submit" title="Remove from favorites">
+                                    ★ Remove
+                                </button>
                             </form>
                         </div>
                     </div>

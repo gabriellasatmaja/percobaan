@@ -8,7 +8,9 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Handles all /books/* routes.
@@ -99,6 +101,14 @@ public class BookServlet extends HttpServlet {
         String status = req.getParameter("status");
         List<Book> books = bookDAO.findByUser(userId, search, status);
         req.setAttribute("books",  books);
+
+        // IDs of favorited books, so the list page can show a filled star
+        Set<Integer> favoriteIds = new HashSet<>();
+        for (Book fav : bookDAO.findFavoritesByUser(userId)) {
+            favoriteIds.add(fav.getBookId());
+        }
+        req.setAttribute("favoriteIds", favoriteIds);
+
         req.setAttribute("search", search);
         req.setAttribute("status", status);
         req.getRequestDispatcher("/WEB-INF/jsp/books/index.jsp").forward(req, res);

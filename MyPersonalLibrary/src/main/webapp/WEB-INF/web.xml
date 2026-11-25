@@ -7,19 +7,6 @@
 
     <display-name>My Personal Library</display-name>
 
-    <!-- ============================================================
-         Context parameters
-    ============================================================ -->
-    <!--
-         Upload directory — resolved in priority order by UploadConfig:
-           1. Environment variable  UPLOAD_DIR
-           2. JVM property          -DuploadDir
-           3. This context-param    uploadDir
-           4. Default               <user.home>/mylibrary/uploads
-
-         Leave this empty to use the default, or set it to an absolute path.
-         The directory must be writable by the Tomcat process user.
-    -->
     <context-param>
         <param-name>uploadDir</param-name>
         <param-value></param-value>
@@ -28,7 +15,6 @@
     <!-- ============================================================
          Listeners
     ============================================================ -->
-    <!-- Creates upload subdirectories on startup and logs the resolved path. -->
     <listener>
         <listener-class>com.mylibrary.listener.AppStartupListener</listener-class>
     </listener>
@@ -76,11 +62,7 @@
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/settings/*</url-pattern>
     </filter-mapping>
-    <!--
-         Cover images are only shown on authenticated pages, so we protect /covers/* with
-         AuthFilter. Remove this mapping if you want cover images to be publicly accessible
-         (e.g. for sharing links or embedding in emails).
-    -->
+  
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/covers/*</url-pattern>
@@ -96,6 +78,13 @@
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/css/*</url-pattern>
+        <url-pattern>/js/*</url-pattern>
+        <url-pattern>/images/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

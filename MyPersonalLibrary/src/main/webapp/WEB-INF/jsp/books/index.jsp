@@ -3,6 +3,7 @@
 <c:set var="pageTitle" value="My Books" scope="request"/>
 <c:set var="activeNav" value="books" scope="request"/>
 <%@ include file="../_layout_top.jsp" %>
+<!-- DEBUG favoriteIds=${favoriteIds} books=${books.size()} -->
 
 <section class="page-heading">
     <h1>My Books</h1>
@@ -62,7 +63,11 @@
                             <a href="${pageContext.request.contextPath}/books/${book.bookId}">Details</a>
                             <a href="${pageContext.request.contextPath}/books/${book.bookId}/edit">Edit</a>
                             <form action="${pageContext.request.contextPath}/books/${book.bookId}/favorite" method="POST">
-                                <button type="submit" title="Toggle favorite">☆</button>
+                                <c:set var="isFav" value="${favoriteIds.contains(book.bookId)}"/>
+                                <button type="submit"
+                                        class="fav-btn${isFav ? ' is-fav' : ''}"
+                                        title="${isFav ? 'Remove from favorites' : 'Add to favorites'}"
+                                        aria-pressed="${isFav}">${isFav ? '★' : '☆'}</button>
                             </form>
                             <form action="${pageContext.request.contextPath}/books/${book.bookId}/delete"
                                   method="POST"
